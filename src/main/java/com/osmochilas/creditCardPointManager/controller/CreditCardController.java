@@ -18,7 +18,7 @@ public class CreditCardController {
         this.creditCardService = creditCardService;
     }
 
-    @GetMapping("/credit-card/user/{userId}")
+    @GetMapping("/credit-cards/users/{userId}")
     public ResponseEntity<List<CreditCard>> getCreditCards(
             @PathVariable String userId) {
         return ResponseEntity.ok(creditCardService.getCreditCards(userId));
