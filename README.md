@@ -1,2 +1,1 @@
-# pointsManager
-Credit card points manager
+# Credit card point manager
