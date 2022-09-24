@@ -8,6 +8,7 @@ import com.osmochilas.creditCardPointManager.service.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,5 +28,16 @@ public class UserServiceImpl implements UserService {
         UserEntity userUnsaved = userMapper.toEntity(user);
         UserEntity userSaved = userRepository.save(userUnsaved);
         return userMapper.toDomain(userSaved);
+    }
+
+    @Override
+    public Optional<User> getUser(String cpf) {
+        Optional<UserEntity> userSaved = userRepository.findById(cpf);
+        if(userSaved.isPresent()){
+            User user =  userMapper.toDomain(userSaved.get());
+            return Optional.of(user);
+        }
+
+        return Optional.empty();
     }
 }
