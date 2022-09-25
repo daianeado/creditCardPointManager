@@ -1,5 +1,6 @@
 package com.osmochilas.creditCardPointManager.controller;
 
+import com.osmochilas.creditCardPointManager.domain.Bill;
 import com.osmochilas.creditCardPointManager.domain.CreditCard;
 import com.osmochilas.creditCardPointManager.service.CreditCardService;
 import org.springframework.http.ResponseEntity;
@@ -22,5 +23,11 @@ public class CreditCardController {
     public ResponseEntity<List<CreditCard>> getCreditCards(
             @PathVariable String userId) {
         return ResponseEntity.ok(creditCardService.getCreditCards(userId));
+    }
+
+    @GetMapping("/credit-card/user/{userId}/bills")
+    public ResponseEntity<List<Bill>> getBillsFromCreditCards(
+            @PathVariable String userId) {
+        return ResponseEntity.ok(creditCardService.getBills(userId));
     }
 }

@@ -4,17 +4,20 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.time.LocalDate;
 
-@Entity(name="creditCards")
+@Entity(name="bills")
 @Data
-public class CreditCardEntity {
+public class BillEntity {
+
     @Id
-    private Long id;
-    private String userId;
+    private String billId;
     private String bankId;
     private String bankName;
     private String creditCardId;
     private String creditCardName;
-    private Double pointsRule;
-    private String currency;
+    private LocalDate dueDate;
+    private Double amountValue;
+    private Double amountPoints;
+    private String amountCurrency;
 }
