@@ -17,4 +17,4 @@ Quick start
 Architecture
 ----------
 
-![Architecture diagram](src/main/resources/architecture-diagram.jpeg)
+![Architecture diagram](src/main/resources/architecture-diagram.png)
