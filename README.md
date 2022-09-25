@@ -18,3 +18,5 @@ Architecture
 ----------
 
 ![Architecture diagram](src/main/resources/architecture-diagram.png)
+
+You can see our infrastructure here [Infrastructure documentation](https://drive.google.com/file/d/1Xu4C0Q8MgzLEhzQLY93pqBae2nRpGWD1/view)
