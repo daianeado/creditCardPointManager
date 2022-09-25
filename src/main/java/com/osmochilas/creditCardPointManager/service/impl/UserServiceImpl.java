@@ -8,30 +8,30 @@ import com.osmochilas.creditCardPointManager.repository.UserRepository;
 import com.osmochilas.creditCardPointManager.service.UserService;
 import com.osmochilas.creditCardPointManager.service.mapper.UserCreditCardMapper;
 import com.osmochilas.creditCardPointManager.service.mapper.UserMapper;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
-    private final UserCreditCardRepository userCreditCardRepository;
-    private final UserMapper userMapper;
-    private final UserCreditCardMapper userCreditCardMapper;
-
-    UserServiceImpl(UserRepository userRepository,
-                    UserCreditCardRepository userCreditCardRepository,
-                    UserMapper userMapper, UserCreditCardMapper userCreditCardMapper) {
-        this.userRepository = userRepository;
-        this.userCreditCardRepository = userCreditCardRepository;
-        this.userMapper = userMapper;
-        this.userCreditCardMapper = userCreditCardMapper;
-    }
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private UserCreditCardRepository userCreditCardRepository;
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+    private UserCreditCardMapper userCreditCardMapper;
 
     @Override
     public User createUser(User user) {
-        user.setCreatedAt(LocalDateTime.now());
+        user.setCreatedAt(LocalDate.now());
         UserEntity userUnsaved = userMapper.toEntity(user);
         UserEntity userSaved = userRepository.save(userUnsaved);
         return userMapper.toDomain(userSaved);
@@ -39,9 +39,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUser(String cpf) {
-        Optional<UserEntity> userSaved = userRepository.findById(cpf);
-        if (userSaved.isPresent()) {
-            User user = userMapper.toDomain(userSaved.get());
+        Optional<UserEntity> userSaved = userRepository.findByCpf(cpf);
+        if(userSaved.isPresent()){
+            User user =  userMapper.toDomain(userSaved.get());
             return Optional.of(user);
         }
 

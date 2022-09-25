@@ -9,6 +9,9 @@ import com.osmochilas.creditCardPointManager.repository.CreditCardRepository;
 import com.osmochilas.creditCardPointManager.service.CreditCardService;
 import com.osmochilas.creditCardPointManager.service.mapper.BillMapper;
 import com.osmochilas.creditCardPointManager.service.mapper.CreditCardMapper;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,28 +20,23 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@NoArgsConstructor
+@AllArgsConstructor
 public class CreditCardServiceImpl implements CreditCardService {
 
-    private final CreditCardRepository creditCardRepository;
-    private final CreditCardMapper creditCardMapper;
+    @Autowired
+    private CreditCardRepository creditCardRepository;
+    @Autowired
+    private CreditCardMapper creditCardMapper;
 
-    private final BillRepository billRepository;
-
-    private final BillMapper billMapper;
-
-    CreditCardServiceImpl(CreditCardRepository creditCardRepository,
-                          CreditCardMapper creditCardMapper,
-                          BillRepository billRepository,
-                          BillMapper billMapper) {
-        this.creditCardRepository = creditCardRepository;
-        this.creditCardMapper = creditCardMapper;
-        this.billRepository = billRepository;
-        this.billMapper = billMapper;
-    }
+    @Autowired
+    private BillRepository billRepository;
+    @Autowired
+    private BillMapper billMapper;
 
     @Override
     public List<CreditCard> getCreditCards(String customerId) {
-        Optional<List<CreditCardEntity>> creditCardEntity = creditCardRepository.findByUserId(customerId);
+        Optional<List<CreditCardEntity>> creditCardEntity = creditCardRepository.findByCpf(customerId);
 
         if (creditCardEntity.isPresent()) {
             return creditCardMapper.toDomain(creditCardEntity.get());
@@ -48,7 +46,7 @@ public class CreditCardServiceImpl implements CreditCardService {
     }
     @Override
     public List<Bill> getBills(String cpf){
-        Optional<List<CreditCardEntity>> optionalCreditCards = creditCardRepository.findByUserId(cpf);
+        Optional<List<CreditCardEntity>> optionalCreditCards = creditCardRepository.findByCpf(cpf);
         if(optionalCreditCards.isPresent()){
             List<Bill> bills = new ArrayList<>();
             List<CreditCard> creditCards = creditCardMapper.toDomain(optionalCreditCards.get());
